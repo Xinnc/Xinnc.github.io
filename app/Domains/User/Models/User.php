@@ -34,12 +34,17 @@ class User extends Authenticatable
     public function role(): BelongsTo {
         return $this->belongsTo(Role::class);
     }
+
     public function projectEmployee(): BelongsToMany {
         return $this->belongsToMany(Project::class, 'user_projects');
     }
 
     public function projectManager(): HasMany {
         return $this->hasMany(Project::class, 'manager_id');
+    }
+
+    public function getRoleNameAttribute():? String {
+        return $this->role?->role;
     }
 
     /**
