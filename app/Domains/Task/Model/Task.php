@@ -22,6 +22,10 @@ class Task extends Model
         'status' => TaskStatus::class,
     ];
 
+    protected $with = [
+        'project'
+    ];
+
     public function project(): BelongsTo{
         return $this->belongsTo(Project::class);
     }

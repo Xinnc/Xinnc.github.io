@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Project;
 
+use App\Domains\Project\Actions\StatusUpdateProjectAction;
 use App\Domains\Project\Actions\StoreProjectAction;
+use App\Domains\Project\Actions\UpdateProjectAction;
+use App\Domains\Project\DataTransferObjects\StatusUpdateProjectData;
 use App\Domains\Project\DataTransferObjects\StoreProjectData;
+use App\Domains\Project\DataTransferObjects\UpdateProjectData;
 use App\Domains\Project\Model\Project;
 use App\Domains\Project\Resources\ProjectResource;
 use App\Http\Controllers\Controller;
@@ -14,6 +18,7 @@ class ProjectController extends Controller
     public function __construct()
     {
         $this->authorizeResource(Project::class, 'project');
+        $this->middleware('can:updateStatus,project')->only(['updateStatus']);
     }
 
     public function index()
@@ -31,12 +36,26 @@ class ProjectController extends Controller
             'project' => new ProjectResource(StoreProjectAction::execute($data))
         ]);
     }
-    public function update()
+    public function update(UpdateProjectData $data, Project $project)
     {
-
+        return response()->json([
+            'message' => 'Проект успешно обновлен!',
+            'project' => new ProjectResource(UpdateProjectAction::execute($data, $project))
+        ]);
     }
-    public function destroy()
+    public function destroy(Project $project)
     {
+        $project->delete();
+        return response()->json([
+            'message' => 'Проект успешно удален!'
+        ]);
+    }
 
+    public function updateStatus(StatusUpdateProjectData $data, Project $project)
+    {
+        return response()->json([
+            'message' => 'Статус проекта успешно обновлен!',
+            'project' => new ProjectResource(StatusUpdateProjectAction::execute($data, $project))
+        ]);
     }
 }

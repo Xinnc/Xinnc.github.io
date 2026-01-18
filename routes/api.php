@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Project\ProjectController;
+use App\Http\Controllers\Task\TaskController;
 use App\Http\Controllers\User\AuthController;
 use Illuminate\Http\Request;
 
@@ -11,9 +12,9 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
     Route::get('logout', [AuthController::class, 'logout']);
-    Route::apiResource('project', ProjectController::class);
-});
-
-Route::get('roles', function() {
-    return ['roles' => App\Domains\Shared\Model\Role::first()];
+    Route::namespace('project')->group(function () {
+        Route::apiResource('', ProjectController::class);
+        Route::patch('/{project}/status', [ProjectController::class, 'updateStatus']);
+        Route::apiResource('/{project}/task', TaskController::class);
+    });
 });

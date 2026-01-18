@@ -3,6 +3,7 @@
 namespace App\Domains\Project\Policies;
 
 use App\Domains\Project\Model\Project;
+use App\Domains\Shared\Exceptions\ForbiddenForYouException;
 use App\Domains\User\Models\User;
 
 class ProjectPolicy
@@ -35,7 +36,10 @@ class ProjectPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role_name === 'manager';
+        if($user->role_name === 'manager'){
+            return true;
+        }
+        throw new ForbiddenForYouException();
     }
 
     /**
@@ -46,7 +50,7 @@ class ProjectPolicy
         if($user->role_name === 'manager') {
             return $project->manager_id === $user->id;
         }
-        return false;
+        throw new ForbiddenForYouException();
     }
 
     /**
@@ -57,7 +61,8 @@ class ProjectPolicy
         if($user->role_name === 'manager') {
             return $project->manager_id === $user->id;
         }
-        return false;
+        throw new ForbiddenForYouException();
+
     }
 
     /**
@@ -71,8 +76,12 @@ class ProjectPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Project $project): bool
+    public function updateStatus(User $user, Project $project): bool
     {
-        return false;
+        if($user->role_name === 'manager') {
+            return $project->manager_id === $user->id;
+        }
+        throw new ForbiddenForYouException();
+
     }
 }
