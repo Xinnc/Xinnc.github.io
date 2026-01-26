@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('task_id')->nullable()->constrained('tasks')->nullOnDelete();
             $table->foreignId('program_id')->nullable()->constrained('programs')->nullOnDelete();
             $table->timestampTz('start_time');
-            $table->timestampTz('end_time');
-            $table->unsignedInteger('duration_minutes');
+            $table->timestampTz('end_time')->nullable();
+            $table->unsignedInteger('duration_seconds')->nullable();
             $table->boolean('is_manual')->default(false);
             $table->index(['user_id', 'start_time']);
             $table->index(['project_id', 'start_time']);

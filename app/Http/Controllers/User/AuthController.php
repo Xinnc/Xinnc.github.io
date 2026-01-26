@@ -18,7 +18,7 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Вы успешно зарегестрировались.',
             'token' => $token,
-        ]);
+        ], 201);
     }
 
     public function login(LoginUserData $data){
@@ -31,6 +31,6 @@ class AuthController extends Controller
 
     public function logout(){
         LogoutUserAction::execute();
-        return response()->json([], 204);
+        return response()->noContent( 204);
     }
 }

@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Project;
 use App\Domains\Project\Actions\StatusUpdateProjectAction;
 use App\Domains\Project\Actions\StoreProjectAction;
 use App\Domains\Project\Actions\UpdateProjectAction;
+use App\Domains\Project\DataTransferObjects\FilterProjectData;
+use App\Domains\Project\DataTransferObjects\SortProjectData;
 use App\Domains\Project\DataTransferObjects\StatusUpdateProjectData;
 use App\Domains\Project\DataTransferObjects\StoreProjectData;
 use App\Domains\Project\DataTransferObjects\UpdateProjectData;
 use App\Domains\Project\Model\Project;
 use App\Domains\Project\Resources\ProjectResource;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ProjectController extends Controller
 {
@@ -21,9 +22,14 @@ class ProjectController extends Controller
         $this->middleware('can:updateStatus,project')->only(['updateStatus']);
     }
 
-    public function index()
+    public function index(FilterProjectData $filter, SortProjectData $sort)
     {
-        return response()->json(ProjectResource::collection(Project::all()));
+        $projects = Project::query()
+            ->filter($filter)
+            ->sortByDeadline($sort->deadline)
+            ->paginate(15);
+
+        return ProjectResource::collection($projects);
     }
     public function show(Project $project)
     {
@@ -34,7 +40,7 @@ class ProjectController extends Controller
         return response()->json([
             'message' => 'Проект успешно создан!',
             'project' => new ProjectResource(StoreProjectAction::execute($data))
-        ]);
+        ], 201);
     }
     public function update(UpdateProjectData $data, Project $project)
     {
@@ -46,9 +52,7 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->delete();
-        return response()->json([
-            'message' => 'Проект успешно удален!'
-        ]);
+        return response()->json([],204);
     }
 
     public function updateStatus(StatusUpdateProjectData $data, Project $project)
