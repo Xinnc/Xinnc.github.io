@@ -11,6 +11,7 @@ class StoreTaskAction
 {
     public static function execute(StoreTaskData $data, Project $project): Task
     {
+        $project->ensureIsActive();
         $task = Task::create([
             'project_id' => $project->id,
             'name' => $data->name,

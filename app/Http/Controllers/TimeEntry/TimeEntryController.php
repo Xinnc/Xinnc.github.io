@@ -69,6 +69,13 @@ class TimeEntryController extends Controller
         ], 201);
     }
 
+    public function getStarted()
+    {
+        return response()->json([
+            'timeEntry' => new TimeEntryResource(TimeEntry::where('user_id', auth()->id())->whereNull('end_time')->first())
+        ]);
+    }
+
     public function stop()
     {
         return response()->json([

@@ -4,6 +4,7 @@ namespace App\Domains\TimeEntry\DataTransferObjects;
 
 use App\Domains\Shared\Concerns\ValidationError;
 use Carbon\Carbon;
+use Spatie\LaravelData\Attributes\Validation\AfterOrEqual;
 use Spatie\LaravelData\Attributes\Validation\Date;
 use Spatie\LaravelData\Attributes\Validation\Exists;
 use Spatie\LaravelData\Attributes\Validation\IntegerType;
@@ -28,11 +29,11 @@ class StoreTimeEntryData extends Data
         public ?int   $program_id,
 
         #[Required, Date]
-        #[WithCast(DateTimeInterfaceCast::class, format: ['Y-m-d H:i', 'd.m.Y  H:i', 'd/m/Y H:i'])]
+        #[WithCast(DateTimeInterfaceCast::class, format: ['Y-m-d H:i', 'd.m.Y  H:i', 'd/m/Y H:i', 'd.m.Y\TH:i', 'Y-m-d\TH:i', 'd/m/Y\TH:i'])]
         public Carbon $start_time,
 
-        #[Required, Date]
-        #[WithCast(DateTimeInterfaceCast::class, format: ['Y-m-d H:i', 'd.m.Y H:i', 'd/m/Y H:i'])]
+        #[Required, Date, AfterOrEqual('start_time')]
+        #[WithCast(DateTimeInterfaceCast::class, format: ['Y-m-d H:i', 'd.m.Y  H:i', 'd/m/Y H:i', 'd.m.Y\TH:i', 'Y-m-d\TH:i', 'd/m/Y\TH:i'])]
         public Carbon $end_time,
     )
     {

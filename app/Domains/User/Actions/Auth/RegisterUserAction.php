@@ -5,6 +5,7 @@ namespace App\Domains\User\Actions\Auth;
 use App\Domains\User\DataTransferObjects\RegisterUserData;
 use App\Domains\User\Exceptions\EmailAlreadyExistException;
 use App\Domains\User\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterUserAction
@@ -19,7 +20,7 @@ class RegisterUserAction
             'email' => $data->email,
             'password' => Hash::make($data->password),
         ]);
-
+        Auth::login($user);
         return $user;
     }
 }

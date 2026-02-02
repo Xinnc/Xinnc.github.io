@@ -14,7 +14,7 @@ return [
     'after' => 'Поле :attribute должно быть датой после :date.',
     'before' => 'Поле :attribute должно быть датой до :date.',
     'exists' => 'Выбранный :attribute не существует или недоступен.',
-    'unique' => 'Такой :attribute уже существует.',
+    'unique' => 'Поле :attribute с таким названием уже существует.',
 
     'max' => [
         'string' => 'Поле :attribute не должно превышать :max символов.',

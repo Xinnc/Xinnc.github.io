@@ -5,6 +5,7 @@ namespace App\Domains\Project\Model;
 use App\Domains\Project\DataTransferObjects\FilterProjectData;
 use App\Domains\Project\Enums\ProjectStatus;
 use App\Domains\Shared\Enums\SortDirection;
+use App\Domains\Shared\Exceptions\ForbiddenForYouException;
 use App\Domains\User\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -45,5 +46,15 @@ class Project extends Model
     public function scopeSortByDeadline($query, SortDirection $direction)
     {
         return $query->orderBy('deadline', $direction->value);
+    }
+
+    public function isActive(): bool
+    {
+        return in_array($this->status, [ProjectStatus::Active, ProjectStatus::Paused], true);
+    }
+
+    public function ensureIsActive(): void
+    {
+        throw_if(!$this->isActive(), new ForbiddenForYouException(403, 'Проект завершен или находится в архиве!'));
     }
 }

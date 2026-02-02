@@ -36,4 +36,10 @@ class StoreProjectData extends Data
             'deadline' => 'дедлайн',
         ];
     }
+
+    public static function messages(): array{
+        return [
+            'deadline.after_or_equal' => 'Дедлайн не может быть раньше сегодняшней даты'
+        ];
+    }
 }

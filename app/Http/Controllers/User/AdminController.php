@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Domains\Shared\Exceptions\ConflictHttpException;
+use App\Domains\Shared\Exceptions\ValidationFailedException;
 use App\Domains\Shared\Model\Role;
 use App\Domains\TimeEntry\Resources\TimeEntryResource;
 use App\Domains\User\Actions\Admin\BanUserAction;
@@ -50,6 +52,7 @@ class AdminController extends Controller
 
     public function deleteRole(Role $role)
     {
+        if(User::where('role_id', $role->id)->exists())throw new ConflictHttpException(409, 'Нельзя удалить роль, у которой есть пользователи!');
         $role->delete();
         return response()->json([], 204);
     }

@@ -10,8 +10,7 @@ class StatusUpdateTaskAction
 {
     public static function execute(StatusUpdateTaskData $data, Task $task): Task
     {
-        $task->status = $data->status;
-        $task->save();
+        $task->update(['status' => $data->status]);
         return $task;
     }
 }

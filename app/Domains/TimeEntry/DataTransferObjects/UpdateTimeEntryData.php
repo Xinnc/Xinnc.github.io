@@ -28,11 +28,11 @@ class UpdateTimeEntryData extends Data
         public ?int    $program_id,
 
         #[Nullable, Date, AfterOrEqual('1900-01-01'), BeforeOrEqual('2100-01-01')]
-        #[WithCast(DateTimeInterfaceCast::class, format: ['Y-m-d H:i', 'd/m/Y H:i', 'd.m.Y H:i', 'Y-m-d', 'd.m.Y', 'd/m/Y'])]
+        #[WithCast(DateTimeInterfaceCast::class, format: ['Y-m-d H:i', 'd/m/Y H:i', 'd.m.Y H:i', 'Y-m-d', 'd.m.Y', 'd/m/Y', 'd.m.Y\TH:i', 'Y-m-d\TH:i', 'd/m/Y\TH:i'])]
         public ?Carbon $start_time,
 
-        #[Nullable, Date, AfterOrEqual('1900-01-01'), BeforeOrEqual('2100-01-01')]
-        #[WithCast(DateTimeInterfaceCast::class, format: ['Y-m-d H:i', 'd/m/Y H:i', 'd.m.Y H:i', 'Y-m-d', 'd.m.Y', 'd/m/Y'])]
+        #[Nullable, Date, AfterOrEqual('start_time'), BeforeOrEqual('2100-01-01')]
+        #[WithCast(DateTimeInterfaceCast::class, format: ['Y-m-d H:i', 'd/m/Y H:i', 'd.m.Y H:i', 'Y-m-d', 'd.m.Y', 'd/m/Y', 'd.m.Y\TH:i', 'Y-m-d\TH:i', 'd/m/Y\TH:i'])]
         public ?Carbon $end_time,
     )
     {

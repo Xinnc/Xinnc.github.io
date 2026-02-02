@@ -53,23 +53,24 @@ class TaskController extends Controller
 
     public function update(UpdateTaskData $data, Project $project, Task $task)
     {
+        $project->ensureIsActive();
         return response()->json([
             'message' => 'Задача успешно обновлена!',
             'task' => new TaskResource(UpdateTaskAction::execute($data, $task))
         ]);
     }
 
-    public function destroy(Task $task)
+    public function destroy(Project $project, Task $task)
     {
         $task->delete();
         return response()->json([], 204);
     }
 
-    public function updateStatus(StatusUpdateTaskData $data, Task $task)
+    public function updateStatus(StatusUpdateTaskData $data, Project $project, Task $task)
     {
         return response()->json([
             'message' => 'Статус задачи успешно обновлен!',
-            'project' => new TaskResource(StatusUpdateTaskAction::execute($data, $task))
+            'task' => new TaskResource(StatusUpdateTaskAction::execute($data, $task))
         ]);
     }
 }

@@ -10,6 +10,7 @@ class UpdateProjectAction
 {
     public static function execute(UpdateProjectData $data, Project $project): Project
     {
+        $project->ensureIsActive();
         $updates = $data->getFilledFields();
 
         if (!empty($updates)) {
