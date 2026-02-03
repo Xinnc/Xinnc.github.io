@@ -10,7 +10,7 @@ echo "Running migrations..."
 php artisan migrate --force --no-interaction
 
 # Если нужно сеять данные (только при первом запуске или всегда — на твой выбор)
-# php artisan db:seed --force --no-interaction
+php artisan db:seed --force --no-interaction
 
 # Оптимизация (опционально)
 php artisan config:cache
