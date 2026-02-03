@@ -32,6 +32,7 @@ RUN rm -f /etc/nginx/sites-enabled/default
 # Кладём свой конфиг как основной сайт
 COPY .deploy/nginx.conf /etc/nginx/sites-enabled/default
 
+CMD php artisan migrate --force --seed && service nginx start && php-fpm
 
 
 EXPOSE 80
