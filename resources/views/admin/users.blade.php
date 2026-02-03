@@ -156,14 +156,17 @@
                 <td>${user.first_name} ${user.surname} ${user.last_name || ''}</td>
                 <td>${user.email}</td>
                 <td>
-                    <select class="form-select form-select-sm role-select" data-id="${user.id}" data-current-role-id="${user.role_id}">
-                        ${rolesList.map(role => `
-                            <option value="${role.id}" ${user.role_id === role.id ? 'selected' : ''}>
-                                ${role.role}
-                            </option>
-                        `).join('')}
-                    </select>
-                </td>
+    <select class="form-select form-select-sm role-select" 
+            data-id="${user.id}" 
+            data-current-role-id="${user.role_id}">
+        ${rolesList.map(role => `
+            <option value="${role.id}" 
+                    ${user.role_id === role.id ? 'selected' : ''}>
+                ${role.role}
+            </option>
+        `).join('')}
+    </select>
+</td>
                 <td>
                     <span class="badge bg-${isBanned ? 'danger' : 'success'}">
                         ${isBanned ? 'Забанен' : 'Активен'}
