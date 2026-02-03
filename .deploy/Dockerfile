@@ -1,6 +1,6 @@
 FROM php:8.4-fpm
 
-# Устанавливаем пакеты
+# Устанавливаем пакеты + postgresql-client для pg_isready
 RUN apt-get update && apt-get install -y \
     nginx \
     libpq-dev \
@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     zip \
     unzip \
+    postgresql-client \   # <-- добавь это!
     && docker-php-ext-install pdo pdo_pgsql \
     && apt-get clean
 
@@ -29,12 +30,14 @@ RUN chown -R www-data:www-data storage bootstrap/cache
 # Удаляем дефолтный nginx сайт
 RUN rm -f /etc/nginx/sites-enabled/default
 
-# Кладём свой конфиг как основной сайт
+# Копируем nginx.conf
 COPY .deploy/nginx.conf /etc/nginx/sites-enabled/default
 
-CMD php artisan migrate --force --seed && service nginx start && php-fpm
+# Копируем и делаем исполняемым entrypoint
+COPY .deploy/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
+# ENTRYPOINT запускает миграции + сервисы
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 EXPOSE 80
-
-CMD service nginx start && php-fpm
