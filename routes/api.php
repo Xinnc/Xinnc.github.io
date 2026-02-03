@@ -6,7 +6,7 @@ use App\Http\Controllers\Task\TaskController;
 use App\Http\Controllers\TimeEntry\TimeEntryController;
 use App\Http\Controllers\User\AdminController;
 use App\Http\Controllers\User\AuthController;
-use App\Http\Controllers\user\ProfileController;
+use App\Http\Controllers\User\ProfileController;
 
 use Illuminate\Support\Facades\Route;
 
