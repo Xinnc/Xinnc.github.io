@@ -19,11 +19,11 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        Role::findOrCreate(['role' => 'admin']);
-        Role::findOrCreate(['role' => 'manager']);
-        Role::findOrCreate(['role' => 'employee']);
+        Role::updateOrCreate(['role' => 'admin']);
+        Role::updateOrCreate(['role' => 'manager']);
+        Role::updateOrCreate(['role' => 'employee']);
 
-        User::findOrCreate([
+        User::updateOrCreate([
             'first_name' => 'admin',
             'surname' => 'admin',
             'last_name' => 'admin',
