@@ -15,25 +15,22 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="first_name" class="form-label">Имя</label>
-                                <input type="text" class="form-control" id="first_name" name="first_name"
-                                       value="Алексей" required>
+                                <input type="text" class="form-control" id="first_name" name="first_name" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="surname" class="form-label">Фамилия</label>
-                                <input type="text" class="form-control" id="surname" name="surname" value="Евдокимов"
-                                       required>
+                                <input type="text" class="form-control" id="surname" name="surname" required>
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="last_name" class="form-label">Отчество</label>
-                            <input type="text" class="form-control" id="last_name" name="last_name" value="Евгеньевич">
+                            <input type="text" class="form-control" id="last_name" name="last_name" >
                         </div>
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value="xin@email.com"
-                                   required>
+                            <input type="email" class="form-control" id="email" name="email" required>
                         </div>
 
                         <div class="mb-4">
