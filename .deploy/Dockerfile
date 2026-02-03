@@ -26,9 +26,12 @@ RUN composer install --no-dev --optimize-autoloader
 # Права
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Удаляем дефолтный nginx конфиг и кладём свой
-RUN rm -f /etc/nginx/conf.d/default.conf
-COPY .deploy/nginx.conf /etc/nginx/conf.d/default.conf
+# Удаляем дефолтный nginx сайт
+RUN rm -f /etc/nginx/sites-enabled/default
+
+# Кладём свой конфиг как основной сайт
+COPY .deploy/nginx.conf /etc/nginx/sites-enabled/default
+
 
 
 EXPOSE 80
