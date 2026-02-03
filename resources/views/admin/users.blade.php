@@ -161,7 +161,7 @@
                             data-current-role-id="${user.role_id}">
                         ${rolesList.map(role => `
                             <option value="${role.id}" 
-                                    ${user.role_name === role.role ? 'selected' : ''}>
+                                    ${user.role === role.role ? 'selected' : ''}>
                                 ${role.role}
                             </option>
                         `).join('')}
