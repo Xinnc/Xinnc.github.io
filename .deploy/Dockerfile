@@ -26,8 +26,10 @@ RUN composer install --no-dev --optimize-autoloader
 # Права
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Nginx конфиг
+# Удаляем дефолтный nginx конфиг и кладём свой
+RUN rm -f /etc/nginx/conf.d/default.conf
 COPY .deploy/nginx.conf /etc/nginx/conf.d/default.conf
+
 
 EXPOSE 80
 
